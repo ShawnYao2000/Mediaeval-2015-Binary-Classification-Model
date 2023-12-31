@@ -27,4 +27,7 @@ for script in *.py; do
     # Print the percentage completion
     echo "Percentage complete: $percentage%"
 
+    # Execute CODE/plot/plot.py after each script
+    /Users/mac/venv/bin/python "plot/plot.py"
+
 done

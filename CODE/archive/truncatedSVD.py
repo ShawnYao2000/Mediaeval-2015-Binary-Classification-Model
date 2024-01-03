@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load training dataset
-train_file_path = "mediaeval-2015-trainingset.txt"
+train_file_path = "../mediaeval-2015-trainingset.txt"
 train_data = pd.read_csv(train_file_path, sep='\t')
 
 # Split data into features (X) and labels (y)
@@ -15,7 +15,7 @@ X_train = train_data['tweetText']
 y_train = train_data['label']
 
 # Load testing dataset
-test_file_path = "mediaeval-2015-testset.txt"
+test_file_path = "../mediaeval-2015-testset.txt"
 test_data = pd.read_csv(test_file_path, sep='\t')
 
 # Split data into features (X) and labels (y)

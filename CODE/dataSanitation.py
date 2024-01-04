@@ -3,7 +3,7 @@ import re
 from nltk import WordNetLemmatizer, word_tokenize
 from nltk.corpus import wordnet
 from nltk.corpus import stopwords
-
+from spellchecker import SpellChecker
 # Set of stopwords from multiple languages
 stop_words = set(stopwords.words('english') +
                  stopwords.words('spanish') +
@@ -13,14 +13,7 @@ stop_words = set(stopwords.words('english') +
                  stopwords.words('finnish') +
                  stopwords.words('swedish') +
                  stopwords.words('catalan') +
-                 stopwords.words('hungarian') +
-                 stopwords.words('dutch') +
-                 stopwords.words('romanian') +
-                 stopwords.words('turkish') +
-                 stopwords.words('german') +
-                 stopwords.words('norwegian') +
-                 stopwords.words('slovene') +
-                 stopwords.words('danish'))
+                 stopwords.words('hungarian'))
 
 # File paths
 train_file_path = "mediaeval-2015-trainingset.txt"
@@ -54,56 +47,36 @@ def preprocess_text(text):
     text = text.strip()
     return text
 
-def split_text(text, max_length=150):
-    # Split text into chunks of max_length characters
-    return [text[i:i+max_length] for i in range(0, len(text), max_length)]
+def count_mentions(text):
+    count = text.count("@")
+    return "{" + str(count) +"}"
 
 def load_and_preprocess_data():
     # Load and preprocess training dataset
     train_data = pd.read_csv(train_file_path, sep='\t')
     train_data['tweetText'] = train_data['tweetText'].apply(preprocess_text)
+    # Count mentions in tweets
+    train_data['mention_count'] = train_data['tweetText'].apply(count_mentions)
     # Replace 'humor' label with 'fake'
     train_data['label'] = train_data['label'].replace('humor', 'fake')
     # Select relevant columns for features
     X_train = train_data['tweetText'].astype(str) + '<' + \
               train_data['userId'].astype(str) + '<' + \
-              train_data['timestamp'].astype(str)
+              train_data['timestamp'].astype(str) + '<'
     y_train = train_data['label']
-
     #==============================
-
     # Load testing dataset
     test_data = pd.read_csv(test_file_path, sep='\t')
     test_data['tweetText'] = test_data['tweetText'].apply(preprocess_text)
-
+    # Count mentions in tweets
+    test_data['mention_count'] = test_data['tweetText'].apply(count_mentions)
     # Replace 'humor' label with 'fake'
     test_data['label'] = test_data['label'].replace('humor', 'fake')
     # Select relevant columns for features
     X_test = test_data['tweetText'].astype(str) + '<' + \
              test_data['userId'].astype(str) + '<' + \
-             test_data['timestamp'].astype(str)
+             test_data['timestamp'].astype(str) + '<'
     y_test = test_data['label']
     return X_train, y_train, X_test, y_test
 
-def load_and_preprocess_data_with_augmentation():
-    X_train, y_train, X_test, y_test = load_and_preprocess_data()
-    # Data augmentation on training data
-    X_train_augmented = X_train.apply(lambda x: synonym_replacement(x))
-    return X_train_augmented, y_train, X_test, y_test
-
-def synonym_replacement(sentence, n=5):
-    words = sentence.split()
-    new_sentence = sentence
-    replaced = 0
-    for word in words:
-        if replaced >= n or word in stop_words:
-            continue
-        synonyms = set()
-        for syn in wordnet.synsets(word):
-            for lemma in syn.lemmas():
-                synonyms.add(lemma.name())
-        if synonyms:
-            synonym = synonyms.pop()
-            new_sentence = new_sentence.replace(word, synonym, 1)
-            replaced += 1
-    return new_sentence
+load_and_preprocess_data()

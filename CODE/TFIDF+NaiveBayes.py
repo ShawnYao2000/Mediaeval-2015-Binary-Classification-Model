@@ -6,10 +6,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, classification_report, precision_recall_curve
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.preprocessing import label_binarize
-from dataSanitation import load_and_preprocess_data, load_and_preprocess_data_with_augmentation
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
+from dataSanitation import load_and_preprocess_data
 
 
 X_train, y_train, X_test, y_test = load_and_preprocess_data()
@@ -25,10 +25,11 @@ pipeline_tfidf_bayes = Pipeline([
 
 # Set up the grid search
 parameters = {
-    'tfidf_vectorizer__ngram_range': [(1, 1), (1, 2), (1, 3)],
+    'tfidf_vectorizer__ngram_range': [(1, 1), (1, 2), (1, 3), (2, 2), (2, 4)],
     'tfidf_vectorizer__max_df': [0.5, 0.75, 1.0],
-    'tfidf_vectorizer__max_features': [3500],  # Adding this line
-    'naive_bayes__alpha': [0.01, 0.1, 1]
+    'tfidf_vectorizer__max_features': [3300],
+    'tfidf_vectorizer__norm': ['l1', 'l2'],
+    'naive_bayes__alpha': [0.001, 0.1, 0.3]
 }
 
 """
@@ -42,7 +43,7 @@ parameters = {
 }
 """
 
-grid_search = GridSearchCV(pipeline_tfidf_bayes, parameters, cv=5, n_jobs=-1, scoring='f1_macro')
+grid_search = GridSearchCV(pipeline_tfidf_bayes, parameters, cv=5, n_jobs=-1, scoring='f1_weighted')
 
 # Train the model with grid search
 grid_search.fit(X_train, y_train)

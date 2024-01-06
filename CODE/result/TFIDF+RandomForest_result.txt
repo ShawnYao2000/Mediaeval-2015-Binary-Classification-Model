@@ -1,0 +1,12 @@
+Pipeline with TF-IDF and Random Forest Classifier:
+Accuracy: 0.677762982689747
+Classification Report:
+              precision    recall  f1-score   support
+
+        fake       0.68      1.00      0.81      2546
+        real       0.00      0.00      1.00      1209
+
+    accuracy                           0.68      3755
+   macro avg       0.34      0.50      0.90      3755
+weighted avg       0.46      0.68      0.87      3755
+

@@ -1,0 +1,12 @@
+Pipeline with N-gram (Bigram) and Logistic Regression:
+Accuracy: 0.6780292942743009
+Classification Report:
+              precision    recall  f1-score   support
+
+        fake       0.68      1.00      0.81      2546
+        real       0.50      0.00      0.00      1209
+
+    accuracy                           0.68      3755
+   macro avg       0.59      0.50      0.40      3755
+weighted avg       0.62      0.68      0.55      3755
+

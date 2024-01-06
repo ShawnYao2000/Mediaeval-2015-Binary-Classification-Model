@@ -1,0 +1,12 @@
+Pipeline with BOW and SGD Classifier:
+Accuracy: 0.740612516644474
+Classification Report:
+              precision    recall  f1-score   support
+
+        fake       0.74      0.94      0.83      2546
+        real       0.72      0.32      0.44      1209
+
+    accuracy                           0.74      3755
+   macro avg       0.73      0.63      0.64      3755
+weighted avg       0.74      0.74      0.71      3755
+

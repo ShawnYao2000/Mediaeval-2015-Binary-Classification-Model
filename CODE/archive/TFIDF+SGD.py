@@ -1,3 +1,9 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import SGDClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 import pandas as pd
 import re
 from nltk import WordNetLemmatizer, word_tokenize
@@ -94,3 +100,58 @@ def load_and_preprocess_data():
     y_test = test_data['label']
 
     return X_train, y_train, X_test, y_test
+
+# Load and preprocess data
+X_train, y_train, X_test, y_test = load_and_preprocess_data()
+
+# Design and implement the pipeline with TF-IDF and SGD
+pipeline_tfidf_sgd = Pipeline([
+    ('tfidf_vectorizer', TfidfVectorizer()),
+    ('sgd', SGDClassifier())
+])
+
+# Train the model
+pipeline_tfidf_sgd.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred_tfidf_sgd = pipeline_tfidf_sgd.predict(X_test)
+y_train_pred = pipeline_tfidf_sgd.predict(X_train)
+# Evaluate the model
+accuracy_tfidf_sgd = accuracy_score(y_test, y_pred_tfidf_sgd)
+classification_rep_tfidf_sgd = classification_report(y_test, y_pred_tfidf_sgd, zero_division=1)  # Set zero_division parameter
+# Calculate accuracy for the training set
+accuracy_train = accuracy_score(y_train, y_train_pred)
+classification_rep_train = classification_report(y_train, y_train_pred, zero_division=1)
+
+# Confusion Matrix for the Training Set
+confusion_matrix_train = confusion_matrix(y_train, y_train_pred)
+
+# Confusion Matrix for the Testing Set
+confusion_matrix_test = confusion_matrix(y_test, y_pred_tfidf_sgd)
+
+# Function to plot confusion matrix
+def plot_confusion_matrix(conf_mat, title='Confusion Matrix', labels=['Fake', 'Real']):
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_mat, annot=True, fmt='g', cmap='Blues', xticklabels=labels, yticklabels=labels)
+    plt.xlabel('Predicted Label')
+    plt.ylabel('Actual Label')
+    plt.title(title)
+    plt.show()
+
+# Plot Confusion Matrix for Training Set
+plot_confusion_matrix(confusion_matrix_train, title='Confusion Matrix on Training Set')
+
+# Plot Confusion Matrix for Testing Set
+plot_confusion_matrix(confusion_matrix_test, title='Confusion Matrix on Testing Set')
+
+# Print the results for the training set
+print('Performance on Training Set:')
+print(f'Accuracy: {accuracy_train}')
+print('Classification Report:')
+print(classification_rep_train)
+
+# Print the results for the testing set
+print('Performance on Testing Set:')
+print(f'Accuracy: {accuracy_tfidf_sgd}')
+print('Classification Report:')
+print(classification_rep_tfidf_sgd)

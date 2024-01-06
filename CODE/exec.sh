@@ -4,7 +4,7 @@
 mkdir -p result
 
 # Change directory to where the scripts are located
-cd /Users/mac/PycharmProjects/COMP3222/CODE/
+cd /Users/mac/PycharmProjects/COMP3222/CODE/archive/
 
 # Get the total number of scripts
 total_scripts=$(ls -1 *.py | wc -l)

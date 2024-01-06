@@ -4,22 +4,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, classification_report
-
-# Load training dataset
-train_file_path = "../mediaeval-2015-trainingset.txt"
-train_data = pd.read_csv(train_file_path, sep='\t')
-
-# Split data into features (X) and labels (y)
-X_train = train_data['tweetText']
-y_train = train_data['label']
-
-# Load testing dataset
-test_file_path = "../mediaeval-2015-testset.txt"
-test_data = pd.read_csv(test_file_path, sep='\t')
-
-# Split data into features (X) and labels (y)
-X_test = test_data['tweetText']
-y_test = test_data['label']
+from dataSanitation import load_and_preprocess_data
+# Load and preprocess data
+X_train, y_train, X_test, y_test = load_and_preprocess_data()
 
 # Design and implement the pipeline with TF-IDF and Logistic Regression
 pipeline_tfidf_logistic = Pipeline([

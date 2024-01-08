@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import re
-from nltk import WordNetLemmatizer, word_tokenize
+from nltk import WordNetLemmatizer, word_tokenize, download
 from nltk.corpus import stopwords
 
+download('stopwords')
 # Create individual sets for each language's stopwords
 english_stopwords = set(stopwords.words('english'))
 spanish_stopwords = set(stopwords.words('spanish'))

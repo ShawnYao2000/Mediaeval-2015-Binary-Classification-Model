@@ -53,7 +53,3 @@ See the detailed list of references within the report for the studies and method
 
 ## Appendix
 Additional charts and detailed data analyses are included in the appendix of the project report.
-
----
-
-Please replace `[repository-url]` with the actual URL of the Git repository containing the project. The README.md assumes that the reader has a basic understanding of Git and Python environments.

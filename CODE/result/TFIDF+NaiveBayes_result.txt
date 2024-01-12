@@ -1,12 +1,13 @@
-Performance on Testing Set
-Accuracy: 0.8993342210386152
+time consumed -0.2032320499420166
+Pipeline with TF-IDF and Naive Bayes:
+Accuracy: 0.8607190412782956
 Classification Report:
               precision    recall  f1-score   support
 
-        fake       0.89      0.98      0.93      2546
-        real       0.94      0.74      0.82      1209
+        fake       0.87      0.93      0.90      2546
+        real       0.83      0.72      0.77      1209
 
-    accuracy                           0.90      3755
-   macro avg       0.91      0.86      0.88      3755
-weighted avg       0.90      0.90      0.90      3755
+    accuracy                           0.86      3755
+   macro avg       0.85      0.82      0.83      3755
+weighted avg       0.86      0.86      0.86      3755
 

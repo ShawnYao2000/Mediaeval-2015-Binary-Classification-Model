@@ -1,12 +1,12 @@
 Pipeline with N-gram (Bigram) and Naive Bayes:
-Accuracy: 0.6588548601864181
+Accuracy: 0.5528628495339547
 Classification Report:
               precision    recall  f1-score   support
 
-        fake       0.68      0.92      0.79      2546
-        real       0.39      0.11      0.17      1209
+        fake       0.64      0.79      0.71      2546
+        real       0.09      0.04      0.06      1209
 
-    accuracy                           0.66      3755
-   macro avg       0.54      0.51      0.48      3755
-weighted avg       0.59      0.66      0.59      3755
+    accuracy                           0.55      3755
+   macro avg       0.36      0.42      0.38      3755
+weighted avg       0.46      0.55      0.50      3755
 

@@ -2,26 +2,41 @@ import os
 import matplotlib.pyplot as plt
 
 # Path to the result folder
-result_folder = '../result'
+result_folder = '/Users/mac/PycharmProjects/COMP3222/CODE/result'
 
 # Lists to store classifier names, accuracy and F1 scores
 classifier_names = []
 accuracy_scores = []
 f1_scores = []
 
+# ... [previous code] ...
+
 # Read each .txt file in the result folder
 for filename in os.listdir(result_folder):
     if filename.endswith('.txt'):
         with open(os.path.join(result_folder, filename), 'r') as f:
             lines = f.readlines()
-            # Get the classifier name from the filename
-            classifier_names.append(filename[:-4].replace("_result",""))
-            # Get the accuracy and F1 scores from the file content
+
+            classifier_name = filename[:-4].replace("_result", "")
+            accuracy = None
+            f1_score = None
+
             for line in lines:
                 if 'Accuracy:' in line:
-                    accuracy_scores.append(float(line.split(': ')[1].strip()))
+                    if accuracy is not None:
+                        print(f"Multiple accuracy entries found in {filename}")
+                    accuracy = float(line.split(': ')[1].strip())
                 if 'weighted avg' in line:
-                    f1_scores.append(float(line.split()[-2]))
+                    if f1_score is not None:
+                        print(f"Multiple F1 score entries found in {filename}")
+                    f1_score = float(line.split()[-2])
+
+            if accuracy is not None and f1_score is not None:
+                classifier_names.append(classifier_name)
+                accuracy_scores.append(accuracy)
+                f1_scores.append(f1_score)
+            else:
+                print(f"Missing data in {filename}")
 
 # Function to add value labels on the bars
 def add_value_labels(ax, spacing=5, fontsize=12):

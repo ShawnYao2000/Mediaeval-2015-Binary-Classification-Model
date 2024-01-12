@@ -1,12 +1,12 @@
 Performance on Testing Set:
-Accuracy: 0.8876165113182424
+Accuracy: 0.8905459387483355
 Classification Report:
               precision    recall  f1-score   support
 
-        fake       0.88      0.97      0.92      2546
-        real       0.92      0.71      0.80      1209
+        fake      0.876     0.977     0.924      2546
+        real      0.937     0.708     0.806      1209
 
-    accuracy                           0.89      3755
-   macro avg       0.90      0.84      0.86      3755
-weighted avg       0.89      0.89      0.88      3755
+    accuracy                          0.891      3755
+   macro avg      0.906     0.843     0.865      3755
+weighted avg      0.895     0.891     0.886      3755
 

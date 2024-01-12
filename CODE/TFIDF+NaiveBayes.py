@@ -11,9 +11,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import re
-from nltk import WordNetLemmatizer, word_tokenize
+from nltk import WordNetLemmatizer, word_tokenize, download
 from nltk.corpus import stopwords
 
+download('stopwords')
 # Create individual sets for each language's stopwords
 english_stopwords = set(stopwords.words('english'))
 spanish_stopwords = set(stopwords.words('spanish'))
@@ -120,11 +121,9 @@ pipeline_tfidf_bayes = Pipeline([
 
 # Set up the grid search
 parameters = {
-    'tfidf_vectorizer__ngram_range': [(1, 1), (1, 2), (1, 3)],
-    'tfidf_vectorizer__max_df': [0.4, 0.8],
-    'tfidf_vectorizer__min_df': [0.00005],
-    'tfidf_vectorizer__max_features': [1975],
-    'naive_bayes__alpha': [0.01, 1, 1.5, 2]
+    'tfidf_vectorizer__max_features': [3700],
+    'naive_bayes__alpha': [0.01, 0.05, 0.1, 0.2, 0.5, 0.7, 1, 1.5, 2],
+
 }
 """
 parameters = {
@@ -134,6 +133,7 @@ parameters = {
     'tfidf_vectorizer__use_idf': [True, False],
     'tfidf_vectorizer__norm': ['l1', 'l2'],
     'naive_bayes__alpha': [0.01, 0.05, 0.1, 0.2, 0.5, 0.7, 1],
+    'naive_bayes__alpha': [0.01, 0.05, 0.1, 0.2, 0.5, 0.7, 1, 1.5, 2],
 }
 """
 grid_search = GridSearchCV(pipeline_tfidf_bayes, parameters, cv=10, n_jobs=-1, scoring='f1_weighted')
@@ -158,7 +158,7 @@ optimal_threshold = thresholds[optimal_idx]
 y_pred_optimized = (y_scores >= optimal_threshold).astype(int)
 # Evaluate the model with the optimized threshold
 accuracy_tfidf_bayes = accuracy_score(y_test_binarized, y_pred_optimized)
-classification_rep_tfidf_bayes = classification_report(y_test_binarized, y_pred_optimized, zero_division=1, target_names=['fake', 'real'])
+classification_rep_tfidf_bayes = classification_report(y_test_binarized, y_pred_optimized, zero_division=1, target_names=['fake', 'real'], digits=3)
 # Evaluate the model on the training set
 y_train_pred = best_model.predict(X_train)
 accuracy_train = accuracy_score(y_train, y_train_pred)

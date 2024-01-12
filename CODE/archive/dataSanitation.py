@@ -36,7 +36,7 @@ def preprocess_text(text):
     # Replace emojis with ~
     text = emoji_pattern.sub('~', text)
     # Replace non ascii with
-    #text = re.sub(r'[^\x00-\x7F]+', '', text)
+    text = re.sub(r'[^\x00-\x7F]+', '', text)
     text = text.lower()
     # Tokenize the text
     words = word_tokenize(text)
@@ -87,6 +87,30 @@ def load_and_preprocess_data():
     test_data['tweetText'] = test_data['tweetText'].apply(preprocess_text)
     test_data['label'] = test_data['label'].replace('humor', 'fake')
     # Select relevant columns for features
+    X_test = test_data['tweetText'].astype(str) + '<' + \
+             test_data['userId'].astype(str) + '<' + \
+             test_data['timestamp'].astype(str) + '<' + \
+             test_data['imageId(s)'].astype(str)
+    y_test = test_data['label']
+
+    return X_train, y_train, X_test, y_test
+
+def load_and_preprocess_data1():
+    train_data = pd.read_csv(train_file_path, sep='\t')
+    train_data['label'] = train_data['label'].replace('humor', 'fake')
+    #train_data['tweetText'] = train_data['tweetText'].apply(preprocess_text)
+    # Split data into features (X) and labels (y)
+    X_train = train_data['tweetText'].astype(str) + '<' + \
+              train_data['userId'].astype(str) + '<' + \
+              train_data['timestamp'].astype(str) + '<' + \
+              train_data['imageId(s)'].astype(str)
+    y_train = train_data['label']
+
+
+    test_data = pd.read_csv(test_file_path, sep='\t')
+    test_data['label'] = test_data['label'].replace('humor', 'fake')
+    #test_data['tweetText'] = test_data['tweetText'].apply(preprocess_text)
+    # Split data into features (X) and labels (y)
     X_test = test_data['tweetText'].astype(str) + '<' + \
              test_data['userId'].astype(str) + '<' + \
              test_data['timestamp'].astype(str) + '<' + \

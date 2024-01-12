@@ -1,7 +1,7 @@
 # README.md for MediaEval-2015 Dataset Training Project
 
 ## Overview
-This project uses the MediaEval 2015 dataset to categorize tweets into 'real', 'fake', or 'humor' classifications. It addresses the challenge of misinformation in social media, aiming to enhance the reliability of information dissemination.
+This project uses the MediaEval 2015 dataset to categorize tweets into 'real', 'fake', or 'humor' classifications. It addresses the challenge of misinformation in social media, aiming to enhance the reliability of information dissemination. An F1 of 0.901 with TFIDF-Naive Bayes and 0.89ish with TFIDF-SGD has been achieved.
 
 ## Dataset
 The MediaEval 2015 dataset includes tweets with labels. The dataset has been cleaned to remove missing values, duplicates, and to address label imbalances.
